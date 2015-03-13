@@ -2,6 +2,24 @@
 #define CLASS_H
 
 #include <vector>
+#include <unistd.h>
+#include <fcntl.h>		/* for fcntl */
+#include <sys/types.h>
+#include <sys/stat.h>
+#include <sys/mman.h>		/* for mmap */
+#include <sys/ioctl.h>
+#include <linux/fb.h>
+#include <cmath>
+#include <stdio.h>
+#include <stdlib.h>
+#include <termios.h>
+#include <vector>
+ 
+#include <stdio.h>
+#include <stdlib.h>
+#include <iostream>
+
+using namespace std;
 
 class Color{
 	public:
@@ -15,6 +33,15 @@ class Color{
 	void setRed(int r);
 	void setGreen(int g);
 	void setBlue(int b);
+};
+
+class Point{
+public:
+	int x;
+	int y;
+
+	Point();
+	Point(int x1, int y1);
 };
 
 class FrameBuffer
@@ -33,40 +60,61 @@ public:
 	void deleteLine(Point p1, Point p2, Color c);
 };
 
-class Point{
+class Line{
 public:
-	int x;
-	int y;
-
-	Point();
-	Point(int x1, int y1);
+	Point P1;
+	Point P2;
+	Color c;
+	Line();
+	Line(int x1, int y1, int x2, int y2);
+	void line(int x1, int y1, int x2, int y2);
+	void SetColor(Color color);
+	void Draw(FrameBuffer fb);
 };
 
 class Rectangle{
 public:
-	Point RectPoint[4];
+	Line RectLine[4];
+	Color c;
 
 	Rectangle();
-	void SetRectPoint(int id, Point);
+
+	void SetColor(Color color);
+	void Draw(FrameBuffer fb);
+	
 };
 
 class Building{
 public:
 
-	Rectangle alas;
 	Rectangle Roof;
 	int Height;
+	Color c;
 
 	Building();
+	Building(Rectangle r);
+	Building(Rectangle r, int h);
+
 	void SetRoof(Rectangle roof);
-	void 
+	void SetHeight(int h);
+	void SetColor(Color c);
+
+	Rectangle getRoof();
+	Rectangle getLeftSide();
+	Rectangle getFrontSide();
+
+	void Draw(FrameBuffer fb);
 };
 
 class Peta{
 public:
-	vector <Building> Kota;
+	vector<Building> Kota;// urutan mempengaruhi prioritas
 
-	void Draw();
+	void AddBuilding(Building build);
+	void MakeKotaEmpty();
+	void MoveBuilding(int a, int b);
+
+	void Draw(FrameBuffer fb);
 };
 
 #endif
