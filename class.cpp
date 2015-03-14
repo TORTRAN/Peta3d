@@ -48,7 +48,15 @@ Polygon::Polygon():c(255,0,0){
 	RectLine[2]=Line(40,20,30,10);
 	RectLine[3]=Line(30,10,10,10);
 }
-void Polygon::SetColor(Color color){
+
+Polygon::Polygon(Point a, Point b, Point c, Point d):c(255,0,0){
+	RectLine[0]=Line(a.x, a.y, b.x, b.y);
+	RectLine[1]=Line(b.x, b.y, c.x, c.y);
+	RectLine[2]=Line(c.x, c.y, d.x, d.y);
+	RectLine[3]=Line(d.x, d.y, a.x, a.y);
+}
+
+void Polygon::setColor(Color color){
 	c=color;
 	for(int i = 0; i<4 ; i++){
 		RectLine[i].c=c;
@@ -106,17 +114,17 @@ Polygon Building::getFrontSide(){
 	return rect;
 }
 
-void Building::SetRoof(Polygon r){
+void Building::setRoof(Polygon r){
 	Roof=r;
 }
 
-void Building::SetHeight(int h){
+void Building::setHeight(int h){
 	Height=h;
 }
 
-void Building::SetColor(Color color){
+void Building::setColor(Color color){
 	c=color;
-	Roof.SetColor(color);
+	Roof.setColor(color);
 }
 
 void Building::Draw(FrameBuffer fb){
@@ -139,7 +147,7 @@ void Building::Draw(FrameBuffer fb){
 
 	//draw from roof to land and land
 	for(i=0;i<5;i++){
-		land[i].SetColor(c);
+		land[i].setColor(c);
 		land[i].Draw(fb);
 	}
 	
@@ -206,18 +214,24 @@ void FrameBuffer::drawLine(Point P1,Point P2,Color c){
 	}
 }
 
-void Peta::MoveBuilding(int a, int b){
+void Peta::moveBuilding(int a, int b){
 	Building build=Kota[a];
 	Kota[a]=Kota[b];
 	Kota[b]=build;
 }
 
-void Peta::AddBuilding(Building build){
+void Peta::addBuilding(Building build){
 	Kota.push_back(build);
 }
 
-void Peta::MakeKotaEmpty(){
+void Peta::makeKotaEmpty(){
 	Kota.clear();
+}
+
+void Peta::Draw(FrameBuffer fb){
+	for(int i = 0; i <= Kota.size()-1 ; i++){
+		Kota[i].Draw(fb);
+	}
 }
 
 Line::Line():c(255,0,0){
@@ -238,7 +252,7 @@ void Line::line(int x1, int y1, int x2, int y2){
 	P2.x = x2;
 	P2.y = y2;
 }
-void Line::SetColor(Color color){
+void Line::setColor(Color color){
 	c=color;
 }
 void Line::Draw(FrameBuffer FB){
