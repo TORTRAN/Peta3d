@@ -214,6 +214,45 @@ void FrameBuffer::drawLine(Point P1,Point P2,Color c){
 	}
 }
 
+Peta::Peta(){
+	Building build;
+
+	Polygon new_roof(Point(500,240),Point(550,290),Point(640,260),Point(580,210));
+	build.Roof=new_roof;
+	build.setHeight(310);
+	addBuilding(build);
+
+	new_roof = Polygon(Point(580,320),Point(640,370),Point(720,340),Point(660,290));
+	build.Roof=new_roof;
+	build.setHeight(200);
+	addBuilding(build);
+
+	new_roof = Polygon(Point(660,390),Point(720,440),Point(810,410),Point(740,360));
+	build.Roof=new_roof;
+	build.setHeight(100);
+	addBuilding(build);
+
+	new_roof = Polygon(Point(450,400),Point(500,450),Point(580,420),Point(520,370));
+	build.Roof=new_roof;
+	build.setHeight(100);
+	addBuilding(build);
+
+	new_roof = Polygon(Point(520,60),Point(580,110),Point(660,80),Point(600,30));
+	build.Roof=new_roof;
+	build.setHeight(410);
+	addBuilding(build);
+
+	new_roof = Polygon(Point(90,230),Point(210,330),Point(290,300),Point(170,200));
+	build.Roof=new_roof;
+	build.setHeight(310);
+	addBuilding(build);
+
+	new_roof = Polygon(Point(210,430),Point(270,480),Point(350,450),Point(290,400));
+	build.Roof=new_roof;
+	build.setHeight(210);
+	addBuilding(build);
+}
+
 void Peta::moveBuilding(int a, int b){
 	Building build=Kota[a];
 	Kota[a]=Kota[b];

@@ -121,6 +121,8 @@ class Peta{
 public:
 	vector<Building> Kota;// urutan mempengaruhi prioritas
 
+	Peta();
+
 	void addBuilding(Building build);
 	void makeKotaEmpty();
 	void moveBuilding(int a, int b);
